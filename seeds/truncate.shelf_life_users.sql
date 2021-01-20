@@ -1,0 +1,1 @@
+TRUNCATE shelf_life_users RESTART IDENTITY CASCADE;

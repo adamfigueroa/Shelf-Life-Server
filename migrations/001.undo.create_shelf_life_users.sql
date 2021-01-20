@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS shelf_life_users CASCADE;
