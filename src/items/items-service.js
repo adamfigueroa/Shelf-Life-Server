@@ -25,6 +25,22 @@ const ItemsService = {
         .returning('*')
         .then(([item]) => item)
         .then(item => ItemsService.getById(db, user_items.user_id, item.id))
+    },
+
+    deleteItem(db, item_id) {
+        return db('user_items')
+        .where({
+            id: item_id
+        })
+        .delete();
+    },
+    
+    editItem(db, item, id) {
+        return db('user_items')
+        .where({
+            id: id
+        })
+        .update(item);
     }
 };
 
