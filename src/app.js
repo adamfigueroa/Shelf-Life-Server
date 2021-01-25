@@ -10,6 +10,8 @@ const itemsRouter = require("./items/items-router");
 
 const app = express();
 
+app.use(express.json());
+
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
@@ -21,7 +23,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.send("Hello, my friend!");
 });
 
 app.use(function errorHandler(error, req, res, next) {
