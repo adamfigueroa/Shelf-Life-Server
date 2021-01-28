@@ -27,7 +27,7 @@ const serializeItem = (item) => ({
 itemsRouter
   .route("/")
   .get((req, res, next) => {
-    ItemsService.getUserItems(req.app.get("db"), req.params.user_id)
+    ItemsService.getUserItems(req.app.get("db"), req.user.id)
       .then((items) => {
         return res.json(items.map(serializeItem));
       })
