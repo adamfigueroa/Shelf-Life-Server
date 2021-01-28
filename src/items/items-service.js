@@ -12,9 +12,11 @@ const ItemsService = {
         .where({ user_id: submitted_id })
     },
 
-    getById(db, submitted_id, user_id) {
-        return ItemsService.getUserItems(db, submitted_id)
-        .where('id', user_id)
+    getById(db, id) {
+        return db
+        .select("*")
+        .from('user_items')
+        .where({ id })
         .first();
     },
 
@@ -24,7 +26,7 @@ const ItemsService = {
         .into('user_items')
         .returning('*')
         .then(([item]) => item)
-        .then(item => ItemsService.getById(db, user_items.user_id, item.id))
+        .then(item => ItemsService.getById(db, item.id))
     },
 
     deleteItem(db, item_id) {
