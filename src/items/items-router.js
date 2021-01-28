@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const ItemsService = require("./items-service");
 const xss = require("xss");
+const { requireAuth } = require("../middleware/jwt-auth")
+
 
 const itemsRouter = express.Router();
 const jsonParser = express.json();
@@ -26,6 +28,7 @@ const serializeItem = (item) => ({
 
 itemsRouter
   .route("/")
+  .all(requireAuth)
   .get((req, res, next) => {
     ItemsService.getUserItems(req.app.get("db"), req.user.id)
       .then((items) => {
