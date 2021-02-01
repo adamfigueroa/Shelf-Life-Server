@@ -4,9 +4,8 @@
 [X] Clone Express Boilerplate App
 [X] Create database/table
 [X] Seed table with sample data
-[] List all records with GET /items
-[] Show new form with /items/new
-[] Create a record with POST /items
+[X] List all records with GET /items
+[X] Create a record with POST /items
 [] Show one record with GET /items/:id
 [] Show an edit form with GET /items/:id/edit
 [] Update a record with PUT /items/:id

@@ -2,8 +2,7 @@ const express = require("express");
 const path = require("path");
 const ItemsService = require("./items-service");
 const xss = require("xss");
-const { requireAuth } = require("../middleware/jwt-auth")
-
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const itemsRouter = express.Router();
 const jsonParser = express.json();
@@ -15,6 +14,25 @@ const serializeItem = (item) => ({
   count_down_date: item.count_down_date,
   user_id: item.user_id,
 });
+
+async function validateItem(req, res, next) {
+  try {
+    const item = await ItemsService.getById(
+      req.app.get("db"),
+      req.params.item_id
+    );
+
+    if (!item) {
+      return res.status(404).json({
+        error: "item does not exist",
+      });
+    }
+    req.item = item;
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
 
 // itemsRouter
 // .route("/")
@@ -71,8 +89,11 @@ itemsRouter
 
 itemsRouter
   .route("/:item_id")
+  .all(requireAuth)
+  .all(validateItem)
   .get((req, res, next) => {
-    return res.status(200).json(serializeItem(res.item));
+    return res.status(200)
+    .json(serializeItem(req.item));
   })
   .delete((req, res, next) => {
     ItemsService.deleteItem(req.app.get("db"), res.item.id)
