@@ -96,7 +96,7 @@ itemsRouter
     .json(serializeItem(req.item));
   })
   .delete((req, res, next) => {
-    ItemsService.deleteItem(req.app.get("db"), res.item.id)
+    ItemsService.deleteItem(req.app.get("db"), req.params.item_id)
       .then((rowsAffected) => {
         return res.status(204).json({
           message: `The following item has been deleted: ${rowsAffected}`,
