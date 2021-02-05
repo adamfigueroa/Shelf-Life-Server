@@ -72,11 +72,6 @@ itemsRouter
       }
     }
 
-    // newItem.item_name = item_name;
-    // newItem.days_until_expire = days_until_expire;
-    // newItem.count_down_date = count_down_date;
-    // newItem.user_id = user_id;
-
     ItemsService.insertItem(req.app.get("db"), newItem)
       .then((item) => {
         res
@@ -109,11 +104,33 @@ itemsRouter
 
     if (!item_name) {
       return res.status(400).json({
-        error: "Please submit Item name",
+        error: "Please submit item_name",
+      });
+    }
+    if (!days_until_expire) {
+      return res.status(400).json({
+        error: "Please submit days_until_expire",
+      });
+    }
+    if (!count_down_date) {
+      return res.status(400).json({
+        error: "Please submit count_down_date",
+      });
+    }
+    if (!user_id) {
+      return res.status(400).json({
+        error: "Please submit user_id",
       });
     }
 
-    ItemsService.editItem(req.app.get("db"), item, req.item.id)
+    const editItem = {
+      item_name,
+      days_until_expire, 
+      count_down_date, 
+      user_id
+    }
+
+    ItemsService.editItem(req.app.get("db"), editItem, req.item.id)
       .then((item) => {
         return res
           .status(204)
