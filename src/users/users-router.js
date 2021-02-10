@@ -11,17 +11,17 @@ usersRouter.post("/", jsonParser, (req, res, next) => {
   for (const field of ["first_name", "last_name", "user_name", "password"])
     if (!req.body[field])
       return res.status(400).json({
-        error: `Missing '${field}' in request body`,
+        error: { message: `Missing '${field}' in request body`},
       });
 
   const passwordError = UsersService.validatePassword(password);
 
-  if (passwordError) return res.status(400).json({ error: passwordError });
+  if (passwordError) return res.status(400).json({ error: { message: passwordError} });
 
   UsersService.hasUserWithUsername(req.app.get("db"), user_name)
     .then((hasUserWithUsername) => {
       if (hasUserWithUsername)
-        return res.status(400).json({ error: "Username already exists" });
+        return res.status(400).json({ error: { message: "Username already exists" } });
 
       return UsersService.hashPassword(password).then((hashedPassword) => {
         const newUser = {
