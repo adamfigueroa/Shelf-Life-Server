@@ -41,7 +41,7 @@ This server is built using Node.js/Express with the purpose of being the API for
 - Delete item
 `DELETE /api/items/:itemId`
 
-##### Patch item
+#### Patch item
 `PATCH /api/items/:itemId`
 
 | Body Key            | Type     | Description                        |
