@@ -11,7 +11,7 @@ authRouter.post("/login", jsonParser, (req, res, next) => {
   for (const [key, value] of Object.entries(loginUser)) {
     if (value == null) {
       return res.status(400).json({
-        error: { message: `Missing ${key} in request body` },
+        error: { "message": `Missing ${key} in request body` },
       });
     }
   }
@@ -20,7 +20,7 @@ authRouter.post("/login", jsonParser, (req, res, next) => {
     .then((user) => {
       if (!user) {
         return res.status(400).json({
-          error: "Incorrect user_name or password",
+          error: { "message":"Incorrect username or password"},
         });
       }
       return AuthService.comparePassword(
@@ -29,7 +29,7 @@ authRouter.post("/login", jsonParser, (req, res, next) => {
       ).then((isMatch) => {
         if (!isMatch) {
           return res.status(400).json({
-            error: "Incorrect username or password",
+            error: { message:"Incorrect username or password"},
           });
         }
         const sub = user.user_name;

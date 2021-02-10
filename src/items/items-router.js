@@ -100,26 +100,26 @@ itemsRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { item_name, days_until_expire, count_down_date, user_id } = req.body;
+    let { item_name, days_until_expire, count_down_date, user_id } = req.body;
 
     if (!item_name) {
       return res.status(400).json({
-        error: "Please submit item_name",
+        error: { message: "Please submit item_name" },
       });
     }
     if (!days_until_expire) {
       return res.status(400).json({
-        error: "Please submit days_until_expire",
+        error: { message: "Please submit days_until_expire" },
       });
     }
     if (!count_down_date) {
       return res.status(400).json({
-        error: "Please submit count_down_date",
+        error: { message: "Please submit count_down_date" },
       });
     }
     if (!user_id) {
       return res.status(400).json({
-        error: "Please submit user_id",
+        error: { message: "Please submit user_id" },
       });
     }
 
@@ -133,7 +133,7 @@ itemsRouter
     ItemsService.editItem(req.app.get("db"), editItem, req.item.id)
       .then((item) => {
         return res
-          .status(204)
+          .status(201)
           .location(path.posix.join(req.originalUrl, `/${item.id}`))
           .json(serializeItem(item));
       })
